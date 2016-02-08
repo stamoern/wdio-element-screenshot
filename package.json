@@ -1,0 +1,38 @@
+{
+  "name": "wdio-element-screenshot",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "code": "npm run eslint && npm run jscs",
+    "eslint": "./node_modules/.bin/eslint ./src",
+    "jscs": "./node_modules/.bin/jscs ./src",
+    "build": "npm run clean && npm run babel",
+    "babel": "babel ./src --out-dir ./lib",
+    "clean": "rm -rf ./lib/ ./tests/tmp/",
+    "prepublish": "npm run build",
+    "test": "npm run build && npm run mocha",
+    "mocha": "./node_modules/.bin/mocha -r ./tests/environment/index.js ./tests/spec/index.spec.js --no-timeouts",
+    "install": "./node_modules/.bin/selenium-standalone install"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
+    "eslint": "^1.10.3",
+    "file-url": "^1.0.1",
+    "ghooks": "^1.0.0",
+    "jscs": "^2.3.1",
+    "mocha": "^2.4.5",
+    "png-diff": "^0.3.3",
+    "selenium-standalone": "^4.9.0",
+    "webdriverio": "^3.4.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run code"
+    }
+  },
+  "dependencies": {
+    "png-crop": "0.0.1"
+  }
+}

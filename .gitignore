@@ -1,0 +1,14 @@
+# Output
+lib/
+
+# npm modules
+node_modules/
+
+# IDE
+.idea/
+
+# Tests
+tests/tmp/
+
+# npm
+npm-debug.log

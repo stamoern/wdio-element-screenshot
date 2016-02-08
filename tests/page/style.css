@@ -1,0 +1,23 @@
+body {
+    height: 2000px;
+}
+
+div {
+    position: absolute;
+}
+
+#red {
+    background: red;
+    left: 10px;
+    top: 10px;
+    width: 200px;
+    height: 200px;
+}
+
+#blue {
+    background: blue;
+    left: 50px;
+    top: 1500px;
+    width: 100px;
+    height: 50px;
+}
