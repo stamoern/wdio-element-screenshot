@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/wdio-element-screenshot.svg)](https://www.npmjs.com/package/wdio-element-screenshot)
+
 # wdio-element-screenshot
 
 Additional package for [WebdriverIO](https://github.com/webdriverio/webdriverio). Provides custom commands for taking and saving screenshots of particular elements on the page.
