@@ -1,5 +1,4 @@
-wdio-element-screenshot
-===========
+# wdio-element-screenshot
 
 Additional package for [WebdriverIO](https://github.com/webdriverio/webdriverio). Provides custom commands for taking and saving screenshots of particular elements on the page.
 

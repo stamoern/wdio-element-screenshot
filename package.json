@@ -1,6 +1,13 @@
 {
   "name": "wdio-element-screenshot",
   "version": "1.0.0",
+  "description" : "Additional package for WebdriverIO. Provides custom commands for taking and saving screenshots of particular elements on the page.",
+  "keywords": [
+    "webdriverio",
+    "selenium",
+    "element",
+    "screenshot"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "code": "npm run eslint && npm run jscs",
