@@ -1,7 +1,7 @@
 {
   "name": "wdio-element-screenshot",
-  "version": "1.0.2",
-  "description" : "Additional package for WebdriverIO. Provides custom commands for taking and saving screenshots of particular elements on the page.",
+  "version": "1.0.3",
+  "description": "Additional package for WebdriverIO. Provides custom commands for taking and saving screenshots of particular elements on the page.",
   "keywords": [
     "webdriverio",
     "selenium",
@@ -9,8 +9,8 @@
     "screenshot"
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/withw/wdio-element-screenshot.git"
+    "type": "git",
+    "url": "https://github.com/withw/wdio-element-screenshot.git"
   },
   "main": "lib/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "mocha": "^2.4.5",
     "png-diff": "^0.3.3",
     "selenium-standalone": "^4.9.0",
-    "webdriverio": "^3.4.0"
+    "webdriverio": "^4.0.4"
   },
   "config": {
     "ghooks": {

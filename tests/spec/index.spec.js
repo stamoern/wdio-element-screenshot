@@ -57,8 +57,12 @@ describe('wdioElementScreenshot', function () {
                 });
         });
 
-        it('should reject if element is not found', function () {
-            return assert.isRejected(browser.getElementRect('#not-found'));
+        it('should return null if element is not found', function () {
+            return browser
+                .getElementRect('#not-found')
+                .then(function (rect) {
+                    assert.isNull(rect);
+                });
         });
     });
 
@@ -79,9 +83,13 @@ describe('wdioElementScreenshot', function () {
                 .then(compareScreenshotsFiles.bind(null, testFilename, sampleFilename));
         });
 
-        it('should reject if element is not found', function () {
+        it('should return null if element is not found', function () {
             var testFilename = './tests/tmp/not-found.png';
-            return assert.isRejected(browser.saveElementScreenshot('#not-found', testFilename));
+            return browser
+                .saveElementScreenshot('#not-found', testFilename)
+                .then(function (data) {
+                    assert.isNull(data);
+                });
         });
     });
 });
