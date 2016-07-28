@@ -51,6 +51,7 @@ Selector that specifies a particular element e.g. `body`. Notice that if selecto
 ````
 npm install
 
+./node_modules/.bin/selenium-standalone install
 ./node_modules/.bin/selenium-standalone start
 
 npm run test

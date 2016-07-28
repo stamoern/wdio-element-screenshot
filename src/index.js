@@ -90,16 +90,59 @@ function cropScreenshot([rect, screenshot]) {
  * @returns {Object|undefined}
  */
 function getElementBoundingRect(elementSelector) {
-    var element = document.querySelectorAll(elementSelector)[0];
-    if (element) {
+    function computeFrameOffset(win, dims) {
+        // initialize our result variable
+        if (typeof dims === 'undefined') {
+            dims = {
+                left: win.pageXOffset,
+                top: win.pageYOffset
+            };
+        }
+
+        var frames = win.parent.document.getElementsByTagName('iframe');
+        var frame;
+        var found = false;
+
+        for (var i = 0, len = frames.length; i < len; i++) {
+            frame = frames[i];
+            if (frame.contentWindow === win) {
+                found = true;
+                break;
+            }
+        }
+
+        // add the offset & recurse up the frame chain
+        if (found) {
+            var rect = frame.getBoundingClientRect();
+            dims.left += rect.left + frame.contentWindow.pageXOffset;
+            dims.top += rect.top + frame.contentWindow.pageYOffset;
+
+            if (win !== top) {
+                computeFrameOffset(win.parent, dims);
+            }
+        }
+
+        return dims;
+    }
+
+    function computeElementRect(element, frameOffset) {
         var rect = element.getBoundingClientRect();
+
         return {
-            left: rect.left + window.pageXOffset,
-            right: rect.right + window.pageXOffset,
-            top: rect.top + window.pageYOffset,
-            bottom: rect.bottom + window.pageYOffset,
+            left: rect.left + frameOffset.left,
+            right: rect.right + frameOffset.left,
+            top: rect.top + frameOffset.top,
+            bottom: rect.bottom + frameOffset.top,
             width: rect.width,
             height: rect.height
         };
+    }
+
+    var element = document.querySelectorAll(elementSelector)[0];
+    if (element) {
+        var frameOffset = computeFrameOffset(window);
+        var elementRect = computeElementRect(element, frameOffset);
+
+        return elementRect;
     }
 }
