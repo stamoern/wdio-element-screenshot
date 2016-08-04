@@ -86,38 +86,34 @@ function cropScreenshot([rect, screenshot]) {
 }
 
 /**
+ * Gets the position and size of an element.
+ *
+ * This function is run in the browser so its scope must be contained.
+ *
  * @param {String} elementSelector
  * @returns {Object|undefined}
  */
 function getElementBoundingRect(elementSelector) {
+    /**
+     * @param {Window} win
+     * @param {Object} [dims]
+     * @returns {Object}
+     */
     function computeFrameOffset(win, dims) {
         // initialize our result variable
-        if (typeof dims === 'undefined') {
-            dims = {
-                left: win.pageXOffset,
-                top: win.pageYOffset
-            };
-        }
-
-        var frames = win.parent.document.getElementsByTagName('iframe');
-        var frame;
-        var found = false;
-
-        for (var i = 0, len = frames.length; i < len; i++) {
-            frame = frames[i];
-            if (frame.contentWindow === win) {
-                found = true;
-                break;
-            }
-        }
+        dims = dims || {
+            left: win.pageXOffset,
+            top: win.pageYOffset
+        };
 
         // add the offset & recurse up the frame chain
-        if (found) {
+        var frame = win.frameElement;
+        if (frame) {
             var rect = frame.getBoundingClientRect();
             dims.left += rect.left + frame.contentWindow.pageXOffset;
             dims.top += rect.top + frame.contentWindow.pageYOffset;
 
-            if (win !== top) {
+            if (win !== window.top) {
                 computeFrameOffset(win.parent, dims);
             }
         }
@@ -125,6 +121,11 @@ function getElementBoundingRect(elementSelector) {
         return dims;
     }
 
+    /**
+     * @param {HTMLElement} element
+     * @param {Object} frameOffset
+     * @returns {Object}
+     */
     function computeElementRect(element, frameOffset) {
         var rect = element.getBoundingClientRect();
 
