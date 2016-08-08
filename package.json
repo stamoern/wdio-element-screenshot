@@ -22,7 +22,8 @@
     "clean": "rm -rf ./lib/ ./tests/tmp/",
     "prepublish": "npm run build",
     "test": "npm run build && npm run mocha",
-    "mocha": "./node_modules/.bin/mocha -r ./tests/environment/index.js ./tests/spec/index.spec.js --no-timeouts"
+    "mocha": "./node_modules/.bin/mocha -r ./tests/environment/index.js ./tests/spec/index.spec.js --no-timeouts",
+    "release-patch": "npm run code && npm version patch && npm run build && npm publish && git push --follow-tags"
   },
   "devDependencies": {
     "babel": "^5.8.23",
