@@ -86,20 +86,64 @@ function cropScreenshot([rect, screenshot]) {
 }
 
 /**
+ * Gets the position and size of an element.
+ *
+ * This function is run in the browser so its scope must be contained.
+ *
  * @param {String} elementSelector
  * @returns {Object|undefined}
  */
 function getElementBoundingRect(elementSelector) {
-    var element = document.querySelectorAll(elementSelector)[0];
-    if (element) {
+    /**
+     * @param {Window} win
+     * @param {Object} [dims]
+     * @returns {Object}
+     */
+    function computeFrameOffset(win, dims) {
+        // initialize our result variable
+        dims = dims || {
+            left: win.pageXOffset,
+            top: win.pageYOffset
+        };
+
+        // add the offset & recurse up the frame chain
+        var frame = win.frameElement;
+        if (frame) {
+            var rect = frame.getBoundingClientRect();
+            dims.left += rect.left + frame.contentWindow.pageXOffset;
+            dims.top += rect.top + frame.contentWindow.pageYOffset;
+
+            if (win !== window.top) {
+                computeFrameOffset(win.parent, dims);
+            }
+        }
+
+        return dims;
+    }
+
+    /**
+     * @param {HTMLElement} element
+     * @param {Object} frameOffset
+     * @returns {Object}
+     */
+    function computeElementRect(element, frameOffset) {
         var rect = element.getBoundingClientRect();
+
         return {
-            left: rect.left + window.pageXOffset,
-            right: rect.right + window.pageXOffset,
-            top: rect.top + window.pageYOffset,
-            bottom: rect.bottom + window.pageYOffset,
+            left: rect.left + frameOffset.left,
+            right: rect.right + frameOffset.left,
+            top: rect.top + frameOffset.top,
+            bottom: rect.bottom + frameOffset.top,
             width: rect.width,
             height: rect.height
         };
+    }
+
+    var element = document.querySelectorAll(elementSelector)[0];
+    if (element) {
+        var frameOffset = computeFrameOffset(window);
+        var elementRect = computeElementRect(element, frameOffset);
+
+        return elementRect;
     }
 }

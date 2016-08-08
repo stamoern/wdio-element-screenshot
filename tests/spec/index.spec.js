@@ -26,6 +26,11 @@ describe('wdioElementScreenshot', function () {
         return browser.end();
     });
 
+    beforeEach(function () {
+        // Reset scroll position between tests
+        return browser.scroll(0, 0);
+    });
+
     describe('init', function () {
         it('should exists', function () {
             assert.isFunction(wdioElementScreenshot.init);
@@ -72,6 +77,17 @@ describe('wdioElementScreenshot', function () {
             var sampleFilename = './tests/samples/red.png';
             return browser
                 .saveElementScreenshot('#red', testFilename)
+                .then(compareScreenshotsFiles.bind(null, testFilename, sampleFilename));
+        });
+
+        it('should save valid element screenshot inside frame', function () {
+            var testFilename = './tests/tmp/green.png';
+            var sampleFilename = './tests/samples/green.png';
+
+            return browser
+                .frame(0)
+                .saveElementScreenshot('#green', testFilename)
+                .frameParent()
                 .then(compareScreenshotsFiles.bind(null, testFilename, sampleFilename));
         });
 
