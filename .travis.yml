@@ -10,5 +10,5 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
-  - "./node_modules/.bin/selenium-standalone start"
+  - "sh -e ./node_modules/.bin/selenium-standalone start"
   - sleep 3 # give selenium some time to start
