@@ -7,11 +7,7 @@ var fs = require('fs');
 // WebDriver
 global.browser = require('webdriverio').remote({
     desiredCapabilities: {
-        browserName: 'chrome',
-        chromeOptions: {
-            // Don't complain about cross-origin security in the iframe test
-            args: ['disable-web-security']
-        }
+        browserName: 'firefox'
     }
 });
 
