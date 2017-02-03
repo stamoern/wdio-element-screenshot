@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/withw/wdio-element-screenshot.git"
   },
+  "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
     "postinstall": "selenium-standalone install",
